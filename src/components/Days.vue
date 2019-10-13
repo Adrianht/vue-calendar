@@ -3,18 +3,32 @@
     <div v-for="day in weekDays" :key="day.id">
       {{ day }}
     </div>
-    <div v-for="off in offset" :key="off.id">
+    <div class="__disabled" v-for="off in offset" :key="off.id">
       <button disabled></button>
     </div>
     <div class="__pickable" v-for="day in days" :key="day.id">
-      <button @click="pickDay(day)" :disabled="day.value">{{ day.id }}</button>
+      {{ day.id }}
+      <div v-if="!day.value">
+        <Checkbox
+          :month="month"
+          :wantedBolk="day.bolk"
+          @click="updateBolk"
+          :day="day.id"
+        />
+      </div>
+      <button @click="pickDay(day)" :disabled="day.value">Disable</button>
     </div>
   </div>
 </template>
 
 <script>
+import Checkbox from "@/components/Checkbox.vue";
+
 export default {
   name: "Days",
+  components: {
+    Checkbox
+  },
   data() {
     return {
       weekDays: [
@@ -37,6 +51,9 @@ export default {
   methods: {
     pickDay(id) {
       this.$emit("click", id, this.month);
+    },
+    updateBolk(value, checkbox, month, day) {
+      this.$emit("clickCheck", value, checkbox, month, day);
     }
   }
 };
@@ -50,14 +67,19 @@ export default {
   grid-template-columns: 14% 14% 14% 14% 14% 14% 14%;
   margin-bottom: 3rem;
 
-  button {
-    width: 100%;
-    height: 4rem;
+  .__disabled {
+    button {
+      width: 100%;
+      height: 4rem;
+    }
   }
 
   .__pickable {
-    width: 100%;
-    height: 100%;
+    border: 1px solid black;
+    button {
+      width: 100%;
+      height: 4rem;
+    }
   }
 }
 </style>

@@ -158,10 +158,22 @@ export default {
       for (let index = 1; index <= daysInMonth; index++) {
         dayArray.push({
           id: index,
-          value: false
+          value: false,
+          bolk: this.insertBolk()
         });
       }
       return dayArray;
+    },
+    insertBolk() {
+      let wantedBolks = [];
+      for (let index = 1; index < 4; index++) {
+        wantedBolks.push({
+          id: index,
+          name: "Bolk " + String(index),
+          value: false
+        });
+      }
+      return wantedBolks;
     },
     pickedDay(dayId, monthId) {
       const actualMonth = monthId - 1;
