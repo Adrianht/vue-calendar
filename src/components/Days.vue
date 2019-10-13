@@ -9,7 +9,7 @@
     <div class="__pickable" v-for="day in days" :key="day.id">
       {{ day.id }}
       <div v-if="!day.value">
-        <Checkbox
+        <RadioButtons
           :month="month"
           :wantedBolk="day.bolk"
           @click="updateBolk"
@@ -22,12 +22,12 @@
 </template>
 
 <script>
-import Checkbox from "@/components/Checkbox.vue";
+import RadioButtons from "@/components/RadioButtons.vue";
 
 export default {
   name: "Days",
   components: {
-    Checkbox
+    RadioButtons
   },
   data() {
     return {
@@ -53,7 +53,7 @@ export default {
       this.$emit("click", id, this.month);
     },
     updateBolk(value, checkbox, month, day) {
-      this.$emit("clickCheck", value, checkbox, month, day);
+      this.$emit("clickRadioButton", value, checkbox, month, day);
     }
   }
 };

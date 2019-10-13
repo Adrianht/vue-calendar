@@ -10,6 +10,7 @@
           :days="month.days"
           :offset="month.offset"
           @click="pickedDay"
+          @clickRadioButton="radioButtonClicked"
         />
       </div>
     </div>
@@ -187,6 +188,10 @@ export default {
       } else {
         this.months[actualMonth].value = false;
       }
+    },
+    radioButtonClicked(event, radioButton, month, day) {
+      console.log(event, radioButton, month, day);
+      //add store here
     }
   }
 };
