@@ -1,24 +1,29 @@
 <template>
   <div>
+    <PickMonths :months="months" @click="updateMonth" />
     <div class="picked__month" v-for="month in months" :key="month.id">
-      {{ month.name }}
-      <Days
-        :month="month.id"
-        :name="month.name"
-        :days="month.days"
-        :offset="month.offset"
-        @click="pickedDay"
-      />
+      <div v-if="month.value">
+        {{ month.name }}
+        <Days
+          :month="month.id"
+          :name="month.name"
+          :days="month.days"
+          :offset="month.offset"
+          @click="pickedDay"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Days from "@/components/Days.vue";
+import PickMonths from "@/components/PickMonths.vue";
 
 export default {
   components: {
-    Days
+    Days,
+    PickMonths
   },
   data() {
     return {
@@ -159,9 +164,17 @@ export default {
       return dayArray;
     },
     pickedDay(dayId, monthId) {
-      let actualMonth = monthId - 1;
-      let actualDay = dayId.id - 1;
+      const actualMonth = monthId - 1;
+      const actualDay = dayId.id - 1;
       this.months[actualMonth].days[actualDay].value = true;
+    },
+    updateMonth(monthId) {
+      const actualMonth = monthId - 1;
+      if (this.months[actualMonth].value == false) {
+        this.months[actualMonth].value = true;
+      } else {
+        this.months[actualMonth].value = false;
+      }
     }
   }
 };
