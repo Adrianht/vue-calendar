@@ -171,7 +171,7 @@ export default {
         wantedBolks.push({
           id: index,
           name: "Bolk " + String(index),
-          value: false
+          value: index
         });
       }
       return wantedBolks;
@@ -190,8 +190,12 @@ export default {
       }
     },
     radioButtonClicked(event, radioButton, month, day) {
-      console.log(event, radioButton, month, day);
-      //add store here
+      const actualMonth = month - 1;
+      const actualDay = day - 1;
+      const actualRadioButton = radioButton.id - 1;
+
+      let dayWithRadio = this.months[actualMonth].days[actualDay].bolk[actualRadioButton].value; //value for store
+      console.log(dayWithRadio);
     }
   }
 };

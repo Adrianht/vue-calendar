@@ -5,9 +5,8 @@
         <input
           type="radio"
           :value="radioButton.name"
-          @click="radioButtonClicked($event, radioButton, month, day)"
-          :checked="radioButton.value"
           :name="'Bolk' + month + day"
+          @click="radioButtonClicked($event, radioButton, month, day)"
         />
         <span>{{ radioButton.name }}</span>
       </label>

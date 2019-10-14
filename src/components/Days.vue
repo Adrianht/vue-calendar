@@ -52,8 +52,8 @@ export default {
     pickDay(id) {
       this.$emit("click", id, this.month);
     },
-    updateBolk(value, checkbox, month, day) {
-      this.$emit("clickRadioButton", value, checkbox, month, day);
+    updateBolk(value, radioButton, month, day) {
+      this.$emit("clickRadioButton", value, radioButton, month, day);
     }
   }
 };
@@ -70,7 +70,7 @@ export default {
   .__disabled {
     button {
       width: 100%;
-      height: 4rem;
+      height: 100%;
     }
   }
 
