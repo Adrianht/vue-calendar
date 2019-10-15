@@ -11,6 +11,7 @@
           :offset="month.offset"
           @click="pickedDay"
           @clickRadioButton="radioButtonClicked"
+          @clickReset="resetDay"
         />
       </div>
     </div>
@@ -170,7 +171,7 @@ export default {
       for (let index = 1; index < 4; index++) {
         wantedBolks.push({
           id: index,
-          name: "Bolk " + String(index),
+          name: `Bolk ${index}`,
           value: index
         });
       }
@@ -180,22 +181,36 @@ export default {
       const actualMonth = monthId - 1;
       const actualDay = dayId.id - 1;
       this.months[actualMonth].days[actualDay].value = true;
+      console.log(this.months[actualMonth].days[actualDay].value);
     },
     updateMonth(monthId) {
       const actualMonth = monthId - 1;
-      if (this.months[actualMonth].value == false) {
-        this.months[actualMonth].value = true;
-      } else {
-        this.months[actualMonth].value = false;
-      }
+      this.months[actualMonth].value = !this.months[actualMonth].value;
     },
     radioButtonClicked(event, radioButton, month, day) {
       const actualMonth = month - 1;
       const actualDay = day - 1;
       const actualRadioButton = radioButton.id - 1;
 
-      let dayWithRadio = this.months[actualMonth].days[actualDay].bolk[actualRadioButton].value; //value for store
-      console.log(dayWithRadio);
+      let chosenRadio = this.months[actualMonth].days[actualDay].bolk;
+      this.$store.dispatch("SET_MONTHS", this.months);
+
+      let newArr = chosenRadio.filter(function(element) {
+        if (element.value == chosenRadio[actualRadioButton].value) {
+          return element;
+        }
+      });
+      // console.log(newArr)
+      this.months[actualMonth].days[actualDay].bolk = newArr;
+      // console.log(this.months)
+    },
+    resetDay(day, month) {
+      const actualDay = day - 1;
+      const actualMonth = month - 1;
+
+      this.months[actualMonth].days[actualDay].value = false;
+      this.months[actualMonth].days[actualDay].bolk = this.insertBolk();
+
     }
   }
 };

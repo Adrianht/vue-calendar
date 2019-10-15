@@ -8,6 +8,9 @@
     </div>
     <div class="__pickable" v-for="day in days" :key="day.id">
       {{ day.id }}
+      <div v-if="day.value || day.bolk.length !== 3">
+        <button @click="resetDay(day.id)">Reset</button>
+      </div>
       <div v-if="!day.value">
         <RadioButtons
           :month="month"
@@ -16,7 +19,9 @@
           :day="day.id"
         />
       </div>
-      <button @click="pickDay(day)" :disabled="day.value">Disable</button>
+      <div v-if="!day.value">
+        <button @click="pickDay(day)" :disabled="day.value">Disable</button>
+      </div>
     </div>
   </div>
 </template>
@@ -54,6 +59,9 @@ export default {
     },
     updateBolk(value, radioButton, month, day) {
       this.$emit("clickRadioButton", value, radioButton, month, day);
+    },
+    resetDay(day) {
+      this.$emit("clickReset", day, this.month);
     }
   }
 };
