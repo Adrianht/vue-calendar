@@ -5,7 +5,7 @@
       class="prev-button"
       v-if="getStep != 1"
     >
-      Forrige steg
+      Previous step
     </button>
     <button
       @click="buttonClickNext()"
@@ -13,7 +13,7 @@
       v-if="getStep != 3"
       :disabled="isDisabled"
     >
-      Neste steg
+      Next step
     </button>
   </div>
 </template>
