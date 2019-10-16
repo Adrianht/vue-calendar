@@ -35,51 +35,11 @@ export default {
   data() {
     return {
       months: [],
-      years: [
-        {
-          id: 2019,
-          name: 2019
-        },
-        {
-          id: 2020,
-          name: 2020
-        },
-        {
-          id: 2021,
-          name: 2021
-        },
-        {
-          id: 2022,
-          name: 2022
-        },
-        {
-          id: 2023,
-          name: 2023
-        },
-        {
-          id: 2024,
-          name: 2024
-        },
-        {
-          id: 2025,
-          name: 2025
-        }
-      ],
+      years: [],
       chosenYear: 0
     };
   },
   methods: {
-    initMonths() {
-      for (let index = 1; index <= 12; index++) {
-        this.months.push({
-          id: index,
-          name: this.getMonthName(index),
-          value: false,
-          offset: this.getOffset(index),
-          days: this.getDays(index)
-        });
-      }
-    },
     getMonthName(id) {
       switch (id) {
         case 1:
@@ -109,6 +69,28 @@ export default {
         default:
           return "null";
       }
+    },
+    initMonths() {
+      for (let index = 1; index <= 12; index++) {
+        this.months.push({
+          id: index,
+          name: this.getMonthName(index),
+          value: false,
+          offset: this.getOffset(index),
+          days: this.getDays(index)
+        });
+      }
+    },
+    initYear(){
+      let currentYear = new Date().getFullYear()
+      let localYears = []
+      for (let index = currentYear; index < currentYear + 5; index++) {
+        localYears.push({
+          id: index,
+          name: index
+        })
+      }
+      this.years = localYears
     },
     getOffset(id) {
       //Year should be dynamic
@@ -208,11 +190,14 @@ export default {
       this.$store.dispatch("SET_MONTHS", this.months);
     },
     updateYear(value) {
-      this.chosenYear = value;
+      this.chosenYear = parseInt(value);
       this.months = [];
       this.initMonths();
       this.$store.dispatch("SET_YEAR", value);
     }
+  },
+  created(){
+    this.initYear()
   }
 };
 </script>
