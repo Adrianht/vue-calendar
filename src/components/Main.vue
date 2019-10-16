@@ -1,22 +1,32 @@
 <template>
   <div>
     <div class="radio__months">
-      <RadioButtons :wantedRadio="years" @click="updateYear" />
-      <PickMonths :year="chosenYear" :months="months" @click="updateMonth" />
-    </div>
-    <div class="picked__month" v-for="month in months" :key="month.id">
-      <div v-if="month.value">
-        {{ month.name }}
-        <Days
-          :month="month.id"
-          :name="month.name"
-          :days="month.days"
-          :offset="month.offset"
-          @click="pickedDay"
-          @clickRadioButton="radioButtonClicked"
-          @clickReset="resetDay"
-        />
+      <div v-if="getStep === 1">
+        <RadioButtons :wantedRadio="years" @click="updateYear" />
+        <p v-if="showError">{{errorMessage}}</p>
+        <NavButtons />
       </div>
+      <div v-if="getStep === 2">
+        <PickMonths :year="chosenYear" :months="months" @click="updateMonth" />
+        <NavButtons />
+      </div>
+    </div>
+    <div v-if="getStep === 3">
+      <div class="picked__month" v-for="month in months" :key="month.id">
+        <div v-if="month.value">
+          {{ month.name }}
+          <Days
+            :month="month.id"
+            :name="month.name"
+            :days="month.days"
+            :offset="month.offset"
+            @click="pickedDay"
+            @clickRadioButton="radioButtonClicked"
+            @clickReset="resetDay"
+          />
+        </div>
+      </div>
+      <NavButtons />
     </div>
   </div>
 </template>
@@ -25,18 +35,24 @@
 import Days from "@/components/Days.vue";
 import PickMonths from "@/components/PickMonths.vue";
 import RadioButtons from "@/components/RadioButtons.vue";
+import NavButtons from "@/components/shared/NavButtons.vue"
 
 export default {
   components: {
     Days,
     PickMonths,
-    RadioButtons
+    RadioButtons,
+    NavButtons
   },
   data() {
     return {
       months: [],
       years: [],
-      chosenYear: 0
+      chosenYear: 0,
+      yearConfirmed: false,
+      errorMessage: '',
+      showError: false,
+      monthConfirmed: false
     };
   },
   methods: {
@@ -190,10 +206,28 @@ export default {
       this.$store.dispatch("SET_MONTHS", this.months);
     },
     updateYear(value) {
+      this.showError = false
       this.chosenYear = parseInt(value);
       this.months = [];
       this.initMonths();
       this.$store.dispatch("SET_YEAR", value);
+    },
+    confirmYear(){
+      if(this.chosenYear == 0 ){
+        this.showError = true
+        this.errorMessage = "Velg et år først"
+        return
+      }
+      this.showError = false
+      this.yearConfirmed = true
+    },
+    confirmMonths(){
+      this.monthConfirmed = true
+    }
+  },
+  computed: {
+    getStep() {
+      return this.$store.getters.step
     }
   },
   created(){
