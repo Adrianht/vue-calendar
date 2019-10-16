@@ -26,6 +26,18 @@ export default {
       const actualMonth = monthId - 1;
       this.months[actualMonth].value = !this.months[actualMonth].value;
       this.$store.dispatch("SET_MONTHS", this.months);
+      let mapped = this.months.map(element => element.value)
+      if(mapped.some(this.isAnyTrue)){
+        this.$store.dispatch("SET_STEP_DISABLED", false)
+      } else {
+        this.$store.dispatch("SET_STEP_DISABLED", true)
+      }
+    },
+    isAnyTrue(element){
+      if(element){
+        return true
+      }
+      return false
     }
   },
   computed: {
@@ -39,6 +51,7 @@ export default {
   mounted() {
     this.chosenYear = this.getChosenYear;
     this.months = this.getMonths;
+    this.$store.dispatch('SET_STEP_DISABLED', true)
   }
 };
 </script>
