@@ -8,13 +8,15 @@ export const store = new Vuex.Store({
     months: [],
     year: 2019,
     step: 1,
-    monthCheckboxes: []
+    monthCheckboxes: [],
+    stepDisabled: true
   },
   getters: {
     months: state => state.months,
     year: state => state.year,
     step: state => state.step,
-    monthCheckboxes: state => state.monthCheckboxes
+    monthCheckboxes: state => state.monthCheckboxes,
+    stepDisabled: state => state.stepDisabled
   },
   mutations: {
     SET_MONTHS(state, payload) {
@@ -31,6 +33,9 @@ export const store = new Vuex.Store({
     },
     SET_MONTH_CHECKBOXES(state, payload) {
       state.monthCheckboxes = payload;
+    },
+    SET_STEP_DISABLED: (state, payload) => {
+      state.stepDisabled = payload;
     }
   },
   actions: {
@@ -48,6 +53,9 @@ export const store = new Vuex.Store({
     },
     SET_MONTH_CHECKBOXES: (context, payload) => {
       context.commit("SET_MONTH_CHECKBOXES", payload);
-    }
+    },
+    SET_STEP_DISABLED: (context, payload) => {
+      context.commit('SET_STEP_DISABLED', payload)
+    },
   }
 });

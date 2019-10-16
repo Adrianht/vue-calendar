@@ -3,7 +3,6 @@
     <div class="radio__months">
       <div v-if="getStep === 1">
         <RadioButtons :wantedRadio="years" @click="updateYear" />
-        <p v-if="showError">{{ errorMessage }}</p>
         <NavButtons />
       </div>
       <div v-if="getStep === 2">
@@ -179,7 +178,7 @@ export default {
     updateMonth(monthId) {
       const actualMonth = monthId - 1;
       this.months[actualMonth].value = !this.months[actualMonth].value;
-
+      this.validateMonth()
       this.$store.dispatch("SET_MONTHS", this.months);
     },
     radioButtonClicked(event, radioButton, month, day) {
@@ -212,19 +211,31 @@ export default {
       this.chosenYear = parseInt(value);
       this.months = [];
       this.initMonths();
+      this.validateYear();
       this.$store.dispatch("SET_YEAR", value);
     },
-    confirmYear() {
+    validateYear() {
       if (this.chosenYear == 0) {
         this.showError = true;
         this.errorMessage = "Velg et år først";
         return;
       }
       this.showError = false;
-      this.yearConfirmed = true;
+      this.$store.dispatch('SET_STEP_DISABLED', false)
     },
-    confirmMonths() {
-      this.monthConfirmed = true;
+    validateMonth(){
+      let mapped = this.months.map(month => month.value)
+      if(mapped.some(this.isAnyTrue)){
+        this.$store.dispatch('SET_STEP_DISABLED', false)
+      } else {
+        this.$store.dispatch('SET_STEP_DISABLED', true)
+      }
+    },
+    isAnyTrue(element){
+      if(element){
+        return true
+      }
+      return false
     }
   },
   computed: {

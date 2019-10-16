@@ -7,7 +7,7 @@
     >
       Forrige steg
     </button>
-    <button @click="buttonClickNext()" class="next-button" v-if="getStep != 3">
+    <button @click="buttonClickNext()" class="next-button" v-if="getStep != 3" :disabled="isDisabled">
       Neste steg
     </button>
   </div>
