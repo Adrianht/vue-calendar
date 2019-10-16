@@ -26,6 +26,9 @@ export default {
       const actualMonth = monthId - 1;
       this.months[actualMonth].value = !this.months[actualMonth].value;
       this.$store.dispatch("SET_MONTHS", this.months);
+      this.validateMonths();
+    },
+    validateMonths(){
       let mapped = this.months.map(element => element.value)
       if(mapped.some(this.isAnyTrue)){
         this.$store.dispatch("SET_STEP_DISABLED", false)
@@ -52,6 +55,7 @@ export default {
     this.chosenYear = this.getChosenYear;
     this.months = this.getMonths;
     this.$store.dispatch('SET_STEP_DISABLED', true)
+    this.validateMonths();
   }
 };
 </script>

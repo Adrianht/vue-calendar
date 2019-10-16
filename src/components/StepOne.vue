@@ -25,10 +25,9 @@ export default {
   },
   methods: {
     updateYear(value, radioButton) {
-      this.localYears[radioButton.id].value = !this.localYears[radioButton.id]
-        .value;
+      this.localYears[radioButton.id].value = !this.localYears[radioButton.id].value;
       this.$store.dispatch("SET_CHOSEN_YEAR", value);
-      this.$store.dispatch("SET_STEP_DISABLED", false);
+      this.validateYear()
     },
     initMonths() {
       for (let index = 1; index <= 12; index++) {
@@ -129,8 +128,8 @@ export default {
       }
       return wantedBolks;
     },
-    validateMonth() {
-      let mapped = this.months.map(month => month.value);
+    validateYear() {
+      let mapped = this.localYears.map(year => year.value);
       if (mapped.some(this.isAnyTrue)) {
         this.$store.dispatch("SET_STEP_DISABLED", false);
       } else {
@@ -146,6 +145,7 @@ export default {
   },
   computed: {
     getYears() {
+      console.log(this.$store.getters.years)
       return this.$store.getters.years;
     },
     getChosenYear() {
@@ -154,6 +154,7 @@ export default {
   },
   mounted() {
     this.localYears = this.getYears;
+    this.validateYear();
   }
 };
 </script>
