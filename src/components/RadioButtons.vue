@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="radioButton in wantedBolk" :key="radioButton.name">
+    <div v-for="radioButton in wantedRadio" :key="radioButton.name">
       <label id="radioButtonLabel">
         <input
           type="radio"
@@ -18,7 +18,7 @@
 export default {
   name: "RadioButtons",
   props: {
-    wantedBolk: Array,
+    wantedRadio: Array,
     month: Number,
     day: Number
   },

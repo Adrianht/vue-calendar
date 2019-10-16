@@ -1,10 +1,11 @@
 <template>
   <div>
-    <div v-for="month in months" :key="month.id">
+    <div v-for="month in months" :key="month.id + year">
       <input
         type="checkbox"
         name="checkbox"
         @click="updateWantedMonth(month.id)"
+        :checked="false"
       />
       <label for="checkbox">
         {{ month.name }}
@@ -17,7 +18,8 @@
 export default {
   name: "PickMonths",
   props: {
-    months: Array
+    months: Array,
+    year: Number
   },
   methods: {
     updateWantedMonth(monthId) {

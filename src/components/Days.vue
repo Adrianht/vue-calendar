@@ -14,7 +14,7 @@
       <div v-if="!day.value">
         <RadioButtons
           :month="month"
-          :wantedBolk="day.bolk"
+          :wantedRadio="day.bolk"
           @click="updateBolk"
           :day="day.id"
         />
@@ -44,7 +44,8 @@ export default {
         "Friday",
         "Saturday",
         "Sunday"
-      ]
+      ],
+      currentRadio: ""
     };
   },
   props: {
@@ -58,10 +59,11 @@ export default {
       this.$emit("click", id, this.month);
     },
     updateBolk(value, radioButton, month, day) {
+      this.currentRadio = radioButton.id;
       this.$emit("clickRadioButton", value, radioButton, month, day);
     },
     resetDay(day) {
-      this.$emit("clickReset", day, this.month);
+      this.$emit("clickReset", day, this.month, this.currentRadio);
     }
   }
 };

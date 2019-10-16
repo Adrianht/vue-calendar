@@ -1,6 +1,9 @@
 <template>
   <div>
-    <PickMonths :months="months" @click="updateMonth" />
+    <div class="radio__months">
+      <RadioButtons :wantedRadio="years" @click="updateYear" />
+      <PickMonths :year="chosenYear" :months="months" @click="updateMonth" />
+    </div>
     <div class="picked__month" v-for="month in months" :key="month.id">
       <div v-if="month.value">
         {{ month.name }}
@@ -21,108 +24,96 @@
 <script>
 import Days from "@/components/Days.vue";
 import PickMonths from "@/components/PickMonths.vue";
+import RadioButtons from "@/components/RadioButtons.vue";
 
 export default {
   components: {
     Days,
-    PickMonths
+    PickMonths,
+    RadioButtons
   },
   data() {
     return {
-      months: [
+      months: [],
+      years: [
         {
-          id: 1,
-          name: "January",
-          value: false,
-          offset: this.getOffset(1),
-          days: this.getDays(1)
+          id: 2019,
+          name: 2019
         },
         {
-          id: 2,
-          name: "February",
-          value: false,
-          offset: this.getOffset(2),
-          days: this.getDays(2)
+          id: 2020,
+          name: 2020
         },
         {
-          id: 3,
-          name: "March",
-          value: false,
-          offset: this.getOffset(3),
-          days: this.getDays(3)
+          id: 2021,
+          name: 2021
         },
         {
-          id: 4,
-          name: "April",
-          value: false,
-          offset: this.getOffset(4),
-          days: this.getDays(4)
+          id: 2022,
+          name: 2022
         },
         {
-          id: 5,
-          name: "May",
-          value: false,
-          offset: this.getOffset(5),
-          days: this.getDays(5)
+          id: 2023,
+          name: 2023
         },
         {
-          id: 6,
-          name: "June",
-          value: false,
-          offset: this.getOffset(6),
-          days: this.getDays(6)
+          id: 2024,
+          name: 2024
         },
         {
-          id: 7,
-          name: "July",
-          value: false,
-          offset: this.getOffset(7),
-          days: this.getDays(7)
-        },
-        {
-          id: 8,
-          name: "August",
-          value: false,
-          offset: this.getOffset(8),
-          days: this.getDays(8)
-        },
-        {
-          id: 9,
-          name: "September",
-          value: false,
-          offset: this.getOffset(9),
-          days: this.getDays(9)
-        },
-        {
-          id: 10,
-          name: "October",
-          value: false,
-          offset: this.getOffset(10),
-          days: this.getDays(10)
-        },
-        {
-          id: 11,
-          name: "November",
-          value: false,
-          offset: this.getOffset(11),
-          days: this.getDays(11)
-        },
-        {
-          id: 12,
-          name: "December",
-          value: false,
-          offset: this.getOffset(12),
-          days: this.getDays(12)
+          id: 2025,
+          name: 2025
         }
       ],
-      //Year should be dynamic
-      year: 2019
+      chosenYear: 0
     };
   },
   methods: {
+    initMonths() {
+      for (let index = 1; index <= 12; index++) {
+        this.months.push({
+          id: index,
+          name: this.getMonthName(index),
+          value: false,
+          offset: this.getOffset(index),
+          days: this.getDays(index)
+        });
+      }
+    },
+    getMonthName(id) {
+      switch (id) {
+        case 1:
+          return "January";
+        case 2:
+          return "February";
+        case 3:
+          return "March";
+        case 4:
+          return "April";
+        case 5:
+          return "May";
+        case 6:
+          return "June";
+        case 7:
+          return "July";
+        case 8:
+          return "August";
+        case 9:
+          return "September";
+        case 10:
+          return "October";
+        case 11:
+          return "November";
+        case 12:
+          return "December";
+        default:
+          return "null";
+      }
+    },
     getOffset(id) {
       //Year should be dynamic
-      const getWeekDay = String(2019) + "-" + String(id) + "-" + String(1);
+      const localYear = this.chosenYear;
+      const getWeekDay = String(localYear) + "-" + String(id) + "-" + String(1);
       const dayOfWeek = new Date(getWeekDay).getDay();
       let weekDays = [
         "Sunday",
@@ -155,7 +146,8 @@ export default {
     },
     getDays(id) {
       //Year should be dynamic
-      let daysInMonth = new Date(2019, id, 0).getDate();
+      const localYear = this.chosenYear;
+      let daysInMonth = new Date(localYear, id, 0).getDate();
       const dayArray = [];
       for (let index = 1; index <= daysInMonth; index++) {
         dayArray.push({
@@ -181,11 +173,13 @@ export default {
       const actualMonth = monthId - 1;
       const actualDay = dayId.id - 1;
       this.months[actualMonth].days[actualDay].value = true;
-      console.log(this.months[actualMonth].days[actualDay].value);
+      this.$store.dispatch("SET_MONTHS", this.months);
     },
     updateMonth(monthId) {
       const actualMonth = monthId - 1;
       this.months[actualMonth].value = !this.months[actualMonth].value;
+
+      this.$store.dispatch("SET_MONTHS", this.months);
     },
     radioButtonClicked(event, radioButton, month, day) {
       const actualMonth = month - 1;
@@ -202,18 +196,31 @@ export default {
       });
       // console.log(newArr)
       this.months[actualMonth].days[actualDay].bolk = newArr;
+      this.$store.dispatch("SET_MONTHS", this.months);
+
       // console.log(this.months)
     },
     resetDay(day, month) {
       const actualDay = day - 1;
       const actualMonth = month - 1;
-
       this.months[actualMonth].days[actualDay].value = false;
       this.months[actualMonth].days[actualDay].bolk = this.insertBolk();
-
+      this.$store.dispatch("SET_MONTHS", this.months);
+    },
+    updateYear(value) {
+      this.chosenYear = value;
+      this.months = [];
+      this.initMonths();
+      this.$store.dispatch("SET_YEAR", value);
     }
   }
 };
 </script>
 
-<style></style>
+<style>
+.radio__months {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
