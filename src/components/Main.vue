@@ -1,14 +1,18 @@
 <template>
   <div>
+    <h1>Online Bookingsystem</h1>
     <div class="radio__months">
-      <div v-if="getStep === 1">
+      <div class="__step__one" v-if="getStep === 1">
+        <h2>Select a year</h2>
         <StepOne :years="years" />
       </div>
-      <div v-if="getStep === 2">
+      <div class="__step__two" v-if="getStep === 2">
+        <h2>Select months</h2>
         <StepTwo />
       </div>
     </div>
     <div v-if="getStep === 3">
+      <h2>Update dates</h2>      
       <StepThree />
     </div>
   </div>
@@ -30,10 +34,6 @@ export default {
       months: [],
       years: [],
       chosenYear: 0,
-      yearConfirmed: false,
-      errorMessage: "",
-      showError: false,
-      monthConfirmed: false
     };
   },
   methods: {
@@ -73,10 +73,18 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .radio__months {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  .__step__one{
+    width: 100%
+  }
+
+  .__step__two{
+    width: 100%;
+  }
 }
 </style>

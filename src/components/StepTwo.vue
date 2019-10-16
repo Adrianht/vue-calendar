@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <PickMonths :year="chosenYear" :months="months" @click="updateMonth" />
-    <NavButtons />
+  <div class="step__two">
+    <PickMonths class="__months" :year="chosenYear" :months="months" @click="updateMonth" />
+    <NavButtons class="__nav"/>
   </div>
 </template>
 
@@ -43,4 +43,19 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+
+.step__two{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+
+  .__months{
+    width: 40%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin-bottom: 2rem;
+  }
+}
+</style>
