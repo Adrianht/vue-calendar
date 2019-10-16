@@ -79,10 +79,6 @@ export default {
   align-items: center;
   justify-content: center;
 
-  .__step__one{
-    width: 100%
-  }
-
   .__step__two{
     width: 100%;
   }

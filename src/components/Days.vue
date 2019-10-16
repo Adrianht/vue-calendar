@@ -9,7 +9,7 @@
     <div class="__pickable" v-for="day in days" :key="day.id">
       {{ day.id }}
       <div v-if="day.value || day.bolk.length !== 3">
-        <button @click="resetDay(day.id)">Reset</button>
+        <button class="reset__day" @click="resetDay(day.id)">Reset</button>
       </div>
       <div v-if="!day.value">
         <RadioButtons
@@ -20,7 +20,7 @@
         />
       </div>
       <div v-if="!day.value">
-        <button @click="pickDay(day)" :disabled="day.value">Disable</button>
+        <button class="disable__day" @click="pickDay(day)" :disabled="day.value">Disable</button>
       </div>
     </div>
   </div>
@@ -70,6 +70,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 .days {
   width: 100%;
   height: 100%;

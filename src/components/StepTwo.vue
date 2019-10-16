@@ -52,10 +52,12 @@ export default {
   align-items: center;
 
   .__months{
-    width: 40%;
+    width: 20%;
     display: grid;
-    grid-template-columns: 50% 50%;
     margin-bottom: 2rem;
+  }
+  .__nav{
+    width: 25%;
   }
 }
 </style>
