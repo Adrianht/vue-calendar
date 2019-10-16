@@ -7,7 +7,12 @@
     >
       Forrige steg
     </button>
-    <button @click="buttonClickNext()" class="next-button" v-if="getStep != 3" :disabled="isDisabled">
+    <button
+      @click="buttonClickNext()"
+      class="next-button"
+      v-if="getStep != 3"
+      :disabled="isDisabled"
+    >
       Neste steg
     </button>
   </div>
@@ -22,6 +27,7 @@ export default {
   },
   methods: {
     buttonClickNext() {
+      this.$emit("clickNext");
       this.$store.dispatch("SET_STEP_INCREMENT");
     },
     buttonClickPrevious() {

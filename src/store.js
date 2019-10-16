@@ -6,24 +6,26 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
     months: [],
-    year: 2019,
+    chosenYear: 0,
+    years: [],
     step: 1,
     monthCheckboxes: [],
     stepDisabled: true
   },
   getters: {
     months: state => state.months,
-    year: state => state.year,
+    chosenYear: state => state.chosenYear,
     step: state => state.step,
     monthCheckboxes: state => state.monthCheckboxes,
-    stepDisabled: state => state.stepDisabled
+    stepDisabled: state => state.stepDisabled,
+    years: state => state.years
   },
   mutations: {
     SET_MONTHS(state, payload) {
       state.months = payload;
     },
-    SET_YEAR(state, payload) {
-      state.year = payload;
+    SET_CHOSEN_YEAR(state, payload) {
+      state.chosenYear = payload;
     },
     SET_STEP_INCREMENT(state) {
       state.step++;
@@ -36,14 +38,17 @@ export const store = new Vuex.Store({
     },
     SET_STEP_DISABLED: (state, payload) => {
       state.stepDisabled = payload;
+    },
+    SET_YEARS: (state, payload) => {
+      state.years = payload;
     }
   },
   actions: {
     SET_MONTHS: (context, payload) => {
       context.commit("SET_MONTHS", payload);
     },
-    SET_YEAR: (context, payload) => {
-      context.commit("SET_YEAR", payload);
+    SET_CHOSEN_YEAR: (context, payload) => {
+      context.commit("SET_CHOSEN_YEAR", payload);
     },
     SET_STEP_INCREMENT: context => {
       context.commit("SET_STEP_INCREMENT");
@@ -55,7 +60,10 @@ export const store = new Vuex.Store({
       context.commit("SET_MONTH_CHECKBOXES", payload);
     },
     SET_STEP_DISABLED: (context, payload) => {
-      context.commit('SET_STEP_DISABLED', payload)
+      context.commit("SET_STEP_DISABLED", payload);
     },
+    SET_YEARS: (context, payload) => {
+      context.commit("SET_YEARS", payload);
+    }
   }
 });
