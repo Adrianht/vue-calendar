@@ -3,7 +3,7 @@
     <div class="radio__months">
       <div v-if="getStep === 1">
         <RadioButtons :wantedRadio="years" @click="updateYear" />
-        <p v-if="showError">{{errorMessage}}</p>
+        <p v-if="showError">{{ errorMessage }}</p>
         <NavButtons />
       </div>
       <div v-if="getStep === 2">
@@ -35,7 +35,7 @@
 import Days from "@/components/Days.vue";
 import PickMonths from "@/components/PickMonths.vue";
 import RadioButtons from "@/components/RadioButtons.vue";
-import NavButtons from "@/components/shared/NavButtons.vue"
+import NavButtons from "@/components/shared/NavButtons.vue";
 
 export default {
   components: {
@@ -50,7 +50,7 @@ export default {
       years: [],
       chosenYear: 0,
       yearConfirmed: false,
-      errorMessage: '',
+      errorMessage: "",
       showError: false,
       monthConfirmed: false
     };
@@ -97,16 +97,18 @@ export default {
         });
       }
     },
-    initYear(){
-      let currentYear = new Date().getFullYear()
-      let localYears = []
-      for (let index = currentYear; index < currentYear + 5; index++) {
+    initYear() {
+      let currentYear = new Date().getFullYear();
+      let localYears = [];
+      for (let index = 0; index < 5; index++) {
         localYears.push({
           id: index,
-          name: index
-        })
+          name: currentYear,
+          value: false
+        });
+        currentYear++;
       }
-      this.years = localYears
+      this.years = localYears;
     },
     getOffset(id) {
       //Year should be dynamic
@@ -162,7 +164,7 @@ export default {
         wantedBolks.push({
           id: index,
           name: `Bolk ${index}`,
-          value: index
+          value: false
         });
       }
       return wantedBolks;
@@ -171,6 +173,7 @@ export default {
       const actualMonth = monthId - 1;
       const actualDay = dayId.id - 1;
       this.months[actualMonth].days[actualDay].value = true;
+      this.months[actualMonth].days[actualDay].bolk = [];
       this.$store.dispatch("SET_MONTHS", this.months);
     },
     updateMonth(monthId) {
@@ -188,15 +191,12 @@ export default {
       this.$store.dispatch("SET_MONTHS", this.months);
 
       let newArr = chosenRadio.filter(function(element) {
-        if (element.value == chosenRadio[actualRadioButton].value) {
+        if (element.id == chosenRadio[actualRadioButton].id) {
           return element;
         }
       });
-      // console.log(newArr)
       this.months[actualMonth].days[actualDay].bolk = newArr;
       this.$store.dispatch("SET_MONTHS", this.months);
-
-      // console.log(this.months)
     },
     resetDay(day, month) {
       const actualDay = day - 1;
@@ -205,33 +205,45 @@ export default {
       this.months[actualMonth].days[actualDay].bolk = this.insertBolk();
       this.$store.dispatch("SET_MONTHS", this.months);
     },
-    updateYear(value) {
-      this.showError = false
+    updateYear(value, radioButton) {
+      this.initYear();
+      this.showError = false;
+      this.years[radioButton.id].value = !this.years[radioButton.id].value;
       this.chosenYear = parseInt(value);
       this.months = [];
       this.initMonths();
       this.$store.dispatch("SET_YEAR", value);
     },
-    confirmYear(){
-      if(this.chosenYear == 0 ){
-        this.showError = true
-        this.errorMessage = "Velg et år først"
-        return
+    confirmYear() {
+      if (this.chosenYear == 0) {
+        this.showError = true;
+        this.errorMessage = "Velg et år først";
+        return;
       }
-      this.showError = false
-      this.yearConfirmed = true
+      this.showError = false;
+      this.yearConfirmed = true;
     },
-    confirmMonths(){
-      this.monthConfirmed = true
+    confirmMonths() {
+      this.monthConfirmed = true;
     }
   },
   computed: {
     getStep() {
-      return this.$store.getters.step
+      return this.$store.getters.step;
+    },
+    getMonths() {
+      return this.$store.getters.months;
+    },
+    getYear() {
+      return this.$store.getters.year;
     }
   },
-  created(){
-    this.initYear()
+  created() {
+    this.initYear();
+  },
+  mounted() {
+    this.months = this.getMonths;
+    this.year = this.getYear;
   }
 };
 </script>

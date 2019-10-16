@@ -1,37 +1,42 @@
 <template>
   <div class="buttons">
-      <button @click="buttonClickPrevious()" class="prev-button" v-if="getStep != 1"> Forrige steg </button>
-      <button @click="buttonClickNext()" class="next-button" v-if="getStep != 3" > Neste steg </button>
+    <button
+      @click="buttonClickPrevious()"
+      class="prev-button"
+      v-if="getStep != 1"
+    >
+      Forrige steg
+    </button>
+    <button @click="buttonClickNext()" class="next-button" v-if="getStep != 3">
+      Neste steg
+    </button>
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'NavButtons',
+  name: "NavButtons",
   props: {
     direction: Number,
     maxstep: Number
   },
   methods: {
-    buttonClickNext () {
-      this.$store.dispatch('SET_STEP_INCREMENT')
+    buttonClickNext() {
+      this.$store.dispatch("SET_STEP_INCREMENT");
     },
-    buttonClickPrevious () {
-      this.$store.dispatch('SET_STEP_DECREMENT')
+    buttonClickPrevious() {
+      this.$store.dispatch("SET_STEP_DECREMENT");
     }
   },
   computed: {
-    getStep(){
-      return this.$store.getters.step
+    getStep() {
+      return this.$store.getters.step;
     },
-    isDisabled(){
-       return this.$store.getters.stepDisabled
+    isDisabled() {
+      return this.$store.getters.stepDisabled;
     }
   }
-}
-
+};
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div v-for="month in months" :key="month.id +'-'+ year">
+    <div v-for="month in months" :key="month.id + '-' + year">
       <input
         type="checkbox"
         name="checkbox"
         @click="updateWantedMonth(month.id)"
-        :checked="false"
+        :checked="month.value"
       />
       <label for="checkbox">
         {{ month.name }}

@@ -7,6 +7,7 @@
           :value="radioButton.name"
           :name="'Bolk' + month + day"
           @click="radioButtonClicked($event, radioButton, month, day)"
+          :checked="radioButton.value"
         />
         <span>{{ radioButton.name }}</span>
       </label>
