@@ -20,7 +20,13 @@
         />
       </div>
       <div v-if="!day.value">
-        <button class="disable__day" @click="pickDay(day)" :disabled="day.value">Disable</button>
+        <button
+          class="disable__day"
+          @click="pickDay(day)"
+          :disabled="day.value"
+        >
+          Disable
+        </button>
       </div>
     </div>
   </div>
@@ -70,7 +76,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .days {
   width: 100%;
   height: 100%;

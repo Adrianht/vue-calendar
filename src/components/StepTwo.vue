@@ -1,7 +1,12 @@
 <template>
   <div class="step__two">
-    <PickMonths class="__months" :year="chosenYear" :months="months" @click="updateMonth" />
-    <NavButtons class="__nav"/>
+    <PickMonths
+      class="__months"
+      :year="chosenYear"
+      :months="months"
+      @click="updateMonth"
+    />
+    <NavButtons class="__nav" />
   </div>
 </template>
 
@@ -28,19 +33,19 @@ export default {
       this.$store.dispatch("SET_MONTHS", this.months);
       this.validateMonths();
     },
-    validateMonths(){
-      let mapped = this.months.map(element => element.value)
-      if(mapped.some(this.isAnyTrue)){
-        this.$store.dispatch("SET_STEP_DISABLED", false)
+    validateMonths() {
+      let mapped = this.months.map(element => element.value);
+      if (mapped.some(this.isAnyTrue)) {
+        this.$store.dispatch("SET_STEP_DISABLED", false);
       } else {
-        this.$store.dispatch("SET_STEP_DISABLED", true)
+        this.$store.dispatch("SET_STEP_DISABLED", true);
       }
     },
-    isAnyTrue(element){
-      if(element){
-        return true
+    isAnyTrue(element) {
+      if (element) {
+        return true;
       }
-      return false
+      return false;
     }
   },
   computed: {
@@ -54,26 +59,25 @@ export default {
   mounted() {
     this.chosenYear = this.getChosenYear;
     this.months = this.getMonths;
-    this.$store.dispatch('SET_STEP_DISABLED', true)
+    this.$store.dispatch("SET_STEP_DISABLED", true);
     this.validateMonths();
   }
 };
 </script>
 
 <style lang="scss" scoped>
-
-.step__two{
+.step__two {
   display: flex;
   flex-direction: column;
   width: 100%;
   align-items: center;
 
-  .__months{
+  .__months {
     width: 20%;
     display: grid;
     margin-bottom: 2rem;
   }
-  .__nav{
+  .__nav {
     width: 25%;
   }
 }

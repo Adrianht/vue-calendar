@@ -12,7 +12,7 @@
       </div>
     </div>
     <div v-if="getStep === 3">
-      <h2>Update dates</h2>      
+      <h2>Update dates</h2>
       <StepThree />
     </div>
   </div>
@@ -33,7 +33,7 @@ export default {
     return {
       months: [],
       years: [],
-      chosenYear: 0,
+      chosenYear: 0
     };
   },
   methods: {
@@ -79,7 +79,7 @@ export default {
   align-items: center;
   justify-content: center;
 
-  .__step__two{
+  .__step__two {
     width: 100%;
   }
 }

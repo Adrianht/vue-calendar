@@ -35,9 +35,7 @@ export default {
 @import "@/mixins.scss";
 @include input-radio-checkboxes;
 
-.__month{
-  margin-bottom: .5rem;
+.__month {
+  margin-bottom: 0.5rem;
 }
 </style>
-
-

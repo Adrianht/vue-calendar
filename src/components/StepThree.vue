@@ -47,7 +47,6 @@ export default {
       const actualRadioButton = radioButton.id - 1;
 
       let chosenRadio = this.months[actualMonth].days[actualDay].bolk;
-      this.$store.dispatch("SET_MONTHS", this.months);
 
       let newArr = chosenRadio.filter(function(element) {
         if (element.id == chosenRadio[actualRadioButton].id) {
