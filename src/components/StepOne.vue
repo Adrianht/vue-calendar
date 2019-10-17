@@ -25,10 +25,14 @@ export default {
   },
   methods: {
     updateYear(value, radioButton) {
-      this.localYears[radioButton.id].value = !this.localYears[radioButton.id]
-        .value;
+      this.localYears[radioButton.id].value = !this.localYears[radioButton.id].value;
+      this.localYears.forEach(element => {
+        if(element.id != radioButton.id){
+          element.value = false
+        }
+      });
       this.$store.dispatch("SET_CHOSEN_YEAR", value);
-      this.validateYear();
+      this.validateYear();      
     },
     initMonths() {
       for (let index = 1; index <= 12; index++) {

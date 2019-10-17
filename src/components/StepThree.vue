@@ -47,13 +47,17 @@ export default {
       const actualRadioButton = radioButton.id - 1;
 
       let chosenRadio = this.months[actualMonth].days[actualDay].bolk;
+      console.log(chosenRadio)
 
       let newArr = chosenRadio.filter(function(element) {
         if (element.id == chosenRadio[actualRadioButton].id) {
           return element;
         }
       });
+      console.log(newArr)
+      newArr[0].value = true
       this.months[actualMonth].days[actualDay].bolk = newArr;
+      console.log(this.months)
       this.$store.dispatch("SET_MONTHS", this.months);
     },
     insertBolk() {
