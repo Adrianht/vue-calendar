@@ -10,7 +10,10 @@ export const store = new Vuex.Store({
     years: [],
     step: 1,
     monthCheckboxes: [],
-    stepDisabled: true
+    stepDisabled: true,
+    bolk_1_date: '',
+    bolk_2_date: '',
+    bolk_3_date: '',
   },
   getters: {
     months: state => state.months,
@@ -18,7 +21,10 @@ export const store = new Vuex.Store({
     step: state => state.step,
     monthCheckboxes: state => state.monthCheckboxes,
     stepDisabled: state => state.stepDisabled,
-    years: state => state.years
+    years: state => state.years,
+    bolk_1_date: state => state.bolk_1_date,
+    bolk_2_date: state => state.bolk_2_date,
+    bolk_3_date: state => state.bolk_3_date
   },
   mutations: {
     SET_MONTHS(state, payload) {
@@ -41,7 +47,17 @@ export const store = new Vuex.Store({
     },
     SET_YEARS: (state, payload) => {
       state.years = payload;
+    },
+    SET_BOLK_1_DATE: (state, payload) => {
+      state.bolk_1_date = payload;
+    },
+    SET_BOLK_2_DATE: (state, payload) => {
+      state.bolk_2_date = payload;
+    },
+    SET_BOLK_3_DATE: (state, payload) => {
+      state.bolk_3_date = payload;
     }
+    
   },
   actions: {
     SET_MONTHS: (context, payload) => {
@@ -64,6 +80,15 @@ export const store = new Vuex.Store({
     },
     SET_YEARS: (context, payload) => {
       context.commit("SET_YEARS", payload);
+    },
+    SET_BOLK_1_DATE: (context, payload) => {
+      context.commit("SET_BOLK_1_DATE", payload);
+    },
+    SET_BOLK_2_DATE: (context, payload) => {
+      context.commit("SET_BOLK_2_DATE", payload);
+    },
+    SET_BOLK_3_DATE: (context, payload) => {
+      context.commit("SET_BOLK_3_DATE", payload);
     }
   }
 });

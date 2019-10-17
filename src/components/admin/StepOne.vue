@@ -133,7 +133,8 @@ export default {
         wantedBolks.push({
           id: index,
           name: `Bolk ${index}`,
-          value: false
+          value: false,
+          picked: false
         });
       }
       return wantedBolks;
