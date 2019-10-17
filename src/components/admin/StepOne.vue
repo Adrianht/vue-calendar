@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import RadioButtons from "@/components/RadioButtons.vue";
+import RadioButtons from "@/components/admin/RadioButtons.vue";
 import NavButtons from "@/components/shared/NavButtons.vue";
 
 export default {
@@ -25,13 +25,13 @@ export default {
   },
   methods: {
     updateYear(value, radioButton) {
-      this.localYears[radioButton.id].value = !this.localYears[radioButton.id].value;
-      let localRadio = this.localYears
+      this.localYears[radioButton.id].value = !this.localYears[radioButton.id]
+        .value;
       this.localYears.forEach(element => {
         if (element.id != radioButton.id) {
           element.value = false;
         } else {
-          if(element.value){
+          if (element.value) {
             this.$store.dispatch("SET_CHOSEN_YEAR", value);
             this.validateYear();
           }

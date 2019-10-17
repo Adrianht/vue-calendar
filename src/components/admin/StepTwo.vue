@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import PickMonths from "@/components/PickMonths.vue";
+import PickMonths from "@/components/admin/PickMonths.vue";
 import NavButtons from "@/components/shared/NavButtons.vue";
 
 export default {

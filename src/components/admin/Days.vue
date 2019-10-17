@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import RadioButtons from "@/components/RadioButtons.vue";
+import RadioButtons from "@/components/admin/RadioButtons.vue";
 
 export default {
   name: "Days",
@@ -75,7 +75,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .days {
   width: 100%;
   height: 100%;

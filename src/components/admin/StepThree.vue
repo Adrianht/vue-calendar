@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import Days from "@/components/Days.vue";
+import Days from "@/components/admin/Days.vue";
 import NavButtons from "@/components/shared/NavButtons.vue";
 
 export default {

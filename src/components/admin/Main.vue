@@ -14,14 +14,15 @@
     <div v-if="getStep === 3">
       <h2>Update dates</h2>
       <StepThree />
+      <button @click="goToUser">Finish</button>
     </div>
   </div>
 </template>
 
 <script>
-import StepOne from "@/components/StepOne.vue";
-import StepTwo from "@/components/StepTwo.vue";
-import StepThree from "@/components/StepThree.vue";
+import StepOne from "@/components/admin/StepOne.vue";
+import StepTwo from "@/components/admin/StepTwo.vue";
+import StepThree from "@/components/admin/StepThree.vue";
 
 export default {
   components: {
@@ -50,6 +51,9 @@ export default {
       }
       this.years = localYears;
       this.$store.dispatch("SET_YEARS", localYears);
+    },
+    goToUser(){
+      this.$emit("go_to_user")
     }
   },
   computed: {
