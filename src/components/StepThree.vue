@@ -2,7 +2,9 @@
   <div>
     <div class="picked__month" v-for="month in months" :key="month.id">
       <div v-if="month.value">
-        {{ month.name }}
+        <h1>
+          {{ month.name }}
+        </h1>
         <Days
           :month="month.id"
           :name="month.name"
@@ -48,15 +50,15 @@ export default {
 
       let chosenRadio = this.months[actualMonth].days[actualDay].bolk;
 
-      if(chosenRadio.length !== 1){
+      if (chosenRadio.length !== 1) {
         let newArr = chosenRadio.filter(function(element) {
           if (element.id == chosenRadio[actualRadioButton].id) {
             return element;
           }
         });
-        newArr[0].value = true
+        newArr[0].value = true;
         this.months[actualMonth].days[actualDay].bolk = newArr;
-        this.$store.dispatch("SET_MONTHS", this.months);  
+        this.$store.dispatch("SET_MONTHS", this.months);
       }
     },
     insertBolk() {
