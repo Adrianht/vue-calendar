@@ -14,10 +14,22 @@
         {{day.id}}
         <div v-if="!day.value">
           <div v-if="day.bolk[0].name == bolk1">
-            <button @click="clickBolkOne(day.bolk[0], day.id)" class="__bolk_1">Pick</button>
+            <div v-if="!pickedBolkOne">
+              <button @click="clickBolkOne(day.bolk[0], day.id)" class="__bolk_1">Pick</button>
+            </div>
+            <div v-if="day.bolk[0].picked">
+              <button class="__bolk_1__picked__reset"> Reset </button>
+              <button disabled class="__bolk_1__picked"> Picked Bolk 1</button>
+            </div>
           </div>
           <div v-if="day.bolk[0].name == bolk2">
-            <button @click="clickBolkTwo" class="__bolk_2">Pick</button>
+            <div v-if="!pickedBolkTwo  && !checkBolk2()">
+              <button @click="clickBolkTwo(day.bolk[0], day.id)" class="__bolk_2">Pick</button>
+            </div>
+            <div v-if="day.bolk[0].picked">
+              <button class="__bolk_2__picked__reset"> Reset </button>
+              <button disabled class="__bolk_2__picked"> Picked Bolk 2</button>
+            </div>
           </div>
           <div v-if="day.bolk[0].name == bolk3">
             <button @click="clickBolkThree" class="__bolk_3">Pick</button>
@@ -50,7 +62,9 @@ export default {
       bolk2: "Bolk 2",
       bolk3: "Bolk 3",
       checkDate: true,
-      chosenDay: []
+      chosenDay: [],
+      pickedBolkOne: false,
+      pickedBolkTwo: false
     }
   },
   props: {
@@ -60,15 +74,40 @@ export default {
   },
   methods: {
     clickBolkOne(bolk, day){
-      // let localMonth = this.monthId
-      this.$emit('clickBolk', bolk, this.monthId, day)
+      this.pickedBolkOne = true
+      this.$emit('clickBolkOne', bolk, this.monthId, day)
     },
-    clickBolkTwo(){
-
+    clickBolkTwo(bolk, day){
+      console.log(bolk, day)
+      this.pickedBolkTwo = true
+      this.$emit('clickBolkTwo', bolk, this.monthId, day)
     },
     clickBolkThree(){
       
     },
+    checkBolk2(){
+      console.log("hit1")
+      console.log(this.getBolk2Date)
+      let localDate = this.getBolk2Date
+      console.log(localDate)
+      if(localDate !== ''){
+        console.log("hit2")
+        return true
+      }
+      console.log("hit3")
+      return false
+    }
+  },
+  computed: {
+    getBolk1Date(){
+      return this.$store.getters.bolk_1_date
+    },
+    getBolk2Date(){
+      return this.$store.getters.bolk_2_date
+    },
+    getBolk3Date(){
+      return this.$store.getters.bolk_3_date
+    }
   }
 }
 </script>
@@ -95,14 +134,41 @@ export default {
       height: 7rem;
 
       &.__bolk_1{
-        background-color: green
+        background-color: green;
+
+        &__picked{
+          height: 3rem;
+          background-color: green;
+
+          &__reset{
+            height: 3rem;
+          }
+        }
       }
       &.__bolk_2{
-        background-color: yellow
+        background-color: yellow;
+
+        &__picked{
+          height: 3rem;
+          background-color: yellow;
+
+          &__reset{
+            height: 3rem;
+          }
+        }
       }
 
       &.__bolk_3{
-        background-color: orange
+        background-color: orange;
+
+        &__picked{
+          height: 3rem;
+          background-color: orange;
+
+          &__reset{
+            height: 3rem;
+          }
+        }
       }
     }
   }

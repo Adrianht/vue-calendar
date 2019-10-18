@@ -2,7 +2,7 @@
   <div class="main">
     <div class="__months" v-for="month in months" :key="month.id">
       <div class="__step_one" v-if="month.value == true">
-        <SelectMonth :month="month" :offset="month.offset" :monthId="month.id" @clickBolk="updateBolk"/>
+        <SelectMonth :month="month" :offset="month.offset" :monthId="month.id" @clickBolkOne="updateBolkOne" @clickBolkTwo="updateBolkTwo"/>
       </div>
     </div>
   </div>
@@ -21,17 +21,29 @@ export default {
     SelectMonth,
   },
   methods: {
-    updateBolk(bolk, month, day){
+    updateBolkOne(bolk, month, day){
       console.log(bolk)
       console.log(month)
       console.log(day)
       let localMonth = month - 1
       let localDay = day - 1
-      let chosenDay = this.months[localMonth].days[localDay].bolk[0]
       this.months[localMonth].days[localDay].bolk[0].picked = true
       let bolk1date = String(this.getYear) + '-' + String(month) + '-' + String(day)
 
-      this.$store.dispatch("SET_BOLK_1_DATE", chosenDay)
+      this.$store.dispatch("SET_BOLK_1_DATE", bolk1date)
+
+    },
+    updateBolkTwo(bolk, month, day){
+      console.log(bolk)
+      console.log(month)
+      console.log(day)
+      let localMonth = month - 1
+      let localDay = day - 1
+      this.months[localMonth].days[localDay].bolk[0].picked = true
+      console.log(this.months[localMonth].days[localDay].bolk[0].picked)
+      let bolk2date = String(this.getYear) + '-' + String(month) + '-' + String(day)
+
+      this.$store.dispatch("SET_BOLK_2_DATE", bolk2date)
 
     }
   },
