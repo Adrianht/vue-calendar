@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div v-if="!showUserView">
-      <Main @go_to_user="showUser"/>
+      <Main @go_to_user="showUser" />
     </div>
     <div v-if="showUserView">
       <UserMain />
@@ -13,21 +13,20 @@
 import Main from "./components/admin/Main.vue";
 import UserMain from "./components/user/UserMain.vue";
 
-
 export default {
   name: "app",
   components: {
     Main,
     UserMain
   },
-  data(){
-    return{
+  data() {
+    return {
       showUserView: false
-    }
+    };
   },
   methods: {
-    showUser(){
-      this.showUserView = true
+    showUser() {
+      this.showUserView = true;
     }
   }
 };

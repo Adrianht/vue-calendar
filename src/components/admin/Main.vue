@@ -52,8 +52,8 @@ export default {
       this.years = localYears;
       this.$store.dispatch("SET_YEARS", localYears);
     },
-    goToUser(){
-      this.$emit("go_to_user")
+    goToUser() {
+      this.$emit("go_to_user");
     }
   },
   computed: {

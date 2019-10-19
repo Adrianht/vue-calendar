@@ -11,9 +11,9 @@ export const store = new Vuex.Store({
     step: 1,
     monthCheckboxes: [],
     stepDisabled: true,
-    bolk_1_date: '',
-    bolk_2_date: '',
-    bolk_3_date: '',
+    bolk_1_date: "",
+    bolk_2_date: "",
+    bolk_3_date: ""
   },
   getters: {
     months: state => state.months,
@@ -57,7 +57,6 @@ export const store = new Vuex.Store({
     SET_BOLK_3_DATE: (state, payload) => {
       state.bolk_3_date = payload;
     }
-    
   },
   actions: {
     SET_MONTHS: (context, payload) => {

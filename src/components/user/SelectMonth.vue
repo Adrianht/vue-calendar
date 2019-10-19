@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <h1>
-      {{month.name}}
+      {{ month.name }}
     </h1>
     <div class="days">
       <div v-for="day in weekDays" :key="day.id">
@@ -10,29 +10,50 @@
       <div class="__disabled" v-for="n in offset" :key="n + offsetExtra">
         <button disabled></button>
       </div>
-      <div class="__pickable" v-for="day in month.days" :key="day.id" >
-        {{day.id}}
+      <div class="__pickable" v-for="day in month.days" :key="day.id">
+        {{ day.id }}
         <div v-if="!day.value">
           <div v-if="day.bolk[0].name == bolk1">
-            <div v-if="!pickedBolkOne">
-              <button @click="clickBolkOne(day.bolk[0], day.id)" class="__bolk_1">Pick</button>
+            <div v-if="!pickedBolkOne && !checkBolk1()">
+              <button
+                @click="clickBolkOne(day.bolk[0], day.id)"
+                class="__bolk_1"
+              >
+                Pick
+              </button>
             </div>
             <div v-if="day.bolk[0].picked">
-              <button class="__bolk_1__picked__reset"> Reset </button>
-              <button disabled class="__bolk_1__picked"> Picked Bolk 1</button>
+              <button class="__bolk_1__picked__reset">Reset</button>
+              <button disabled class="__bolk_1__picked">Picked Bolk 1</button>
             </div>
           </div>
           <div v-if="day.bolk[0].name == bolk2">
-            <div v-if="!pickedBolkTwo  && !checkBolk2()">
-              <button @click="clickBolkTwo(day.bolk[0], day.id)" class="__bolk_2">Pick</button>
+            <div v-if="!pickedBolkTwo && !checkBolk2()">
+              <button
+                @click="clickBolkTwo(day.bolk[0], day.id)"
+                class="__bolk_2"
+              >
+                Pick
+              </button>
             </div>
             <div v-if="day.bolk[0].picked">
-              <button class="__bolk_2__picked__reset"> Reset </button>
-              <button disabled class="__bolk_2__picked"> Picked Bolk 2</button>
+              <button class="__bolk_2__picked__reset">Reset</button>
+              <button disabled class="__bolk_2__picked">Picked Bolk 2</button>
             </div>
           </div>
           <div v-if="day.bolk[0].name == bolk3">
-            <button @click="clickBolkThree" class="__bolk_3">Pick</button>
+            <div v-if="!pickedBolkThree && !checkBolk3()">
+              <button
+                @click="clickBolkThree(day.bolk[0], day.id)"
+                class="__bolk_3"
+              >
+                Pick
+              </button>
+            </div>
+            <div v-if="day.bolk[0].picked">
+              <button class="__bolk_3__picked__reset">Reset</button>
+              <button disabled class="__bolk_3__picked">Picked Bolk 3</button>
+            </div>
           </div>
         </div>
         <div class="__disabled" v-if="day.value">
@@ -46,8 +67,8 @@
 <script>
 export default {
   name: "SelectMonth",
-  data(){
-    return{
+  data() {
+    return {
       weekDays: [
         "Monday",
         "Tuesday",
@@ -64,8 +85,9 @@ export default {
       checkDate: true,
       chosenDay: [],
       pickedBolkOne: false,
-      pickedBolkTwo: false
-    }
+      pickedBolkTwo: false,
+      pickedBolkThree: false
+    };
   },
   props: {
     month: Object,
@@ -73,43 +95,52 @@ export default {
     monthId: Number
   },
   methods: {
-    clickBolkOne(bolk, day){
-      this.pickedBolkOne = true
-      this.$emit('clickBolkOne', bolk, this.monthId, day)
+    clickBolkOne(bolk, day) {
+      this.pickedBolkOne = true;
+      this.$emit("clickBolkOne", bolk, this.monthId, day);
     },
-    clickBolkTwo(bolk, day){
-      console.log(bolk, day)
-      this.pickedBolkTwo = true
-      this.$emit('clickBolkTwo', bolk, this.monthId, day)
+    clickBolkTwo(bolk, day) {
+      this.pickedBolkTwo = true;
+      this.$emit("clickBolkTwo", bolk, this.monthId, day);
     },
-    clickBolkThree(){
-      
+    clickBolkThree(bolk, day) {
+      this.pickedBolkThree = true;
+      this.$emit("clickBolkThree", bolk, this.monthId, day);
     },
-    checkBolk2(){
-      console.log("hit1")
-      console.log(this.getBolk2Date)
-      let localDate = this.getBolk2Date
-      console.log(localDate)
-      if(localDate !== ''){
-        console.log("hit2")
-        return true
+    checkBolk1() {
+      const localDate = this.getBolk1Date;
+      if (localDate !== "") {
+        return true;
       }
-      console.log("hit3")
-      return false
+      return false;
+    },
+    checkBolk2() {
+      const localDate = this.getBolk2Date;
+      if (localDate !== "") {
+        return true;
+      }
+      return false;
+    },
+    checkBolk3() {
+      const localDate = this.getBolk3Date;
+      if (localDate !== "") {
+        return true;
+      }
+      return false;
     }
   },
   computed: {
-    getBolk1Date(){
-      return this.$store.getters.bolk_1_date
+    getBolk1Date() {
+      return this.$store.getters.bolk_1_date;
     },
-    getBolk2Date(){
-      return this.$store.getters.bolk_2_date
+    getBolk2Date() {
+      return this.$store.getters.bolk_2_date;
     },
-    getBolk3Date(){
-      return this.$store.getters.bolk_3_date
+    getBolk3Date() {
+      return this.$store.getters.bolk_3_date;
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -133,39 +164,39 @@ export default {
       width: 100%;
       height: 7rem;
 
-      &.__bolk_1{
+      &.__bolk_1 {
         background-color: green;
 
-        &__picked{
+        &__picked {
           height: 3rem;
           background-color: green;
 
-          &__reset{
+          &__reset {
             height: 3rem;
           }
         }
       }
-      &.__bolk_2{
+      &.__bolk_2 {
         background-color: yellow;
 
-        &__picked{
+        &__picked {
           height: 3rem;
           background-color: yellow;
 
-          &__reset{
+          &__reset {
             height: 3rem;
           }
         }
       }
 
-      &.__bolk_3{
+      &.__bolk_3 {
         background-color: orange;
 
-        &__picked{
+        &__picked {
           height: 3rem;
           background-color: orange;
 
-          &__reset{
+          &__reset {
             height: 3rem;
           }
         }
