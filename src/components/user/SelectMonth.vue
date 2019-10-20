@@ -14,16 +14,15 @@
         {{ day.id }}
         <div v-if="!day.value">
           <div v-if="day.bolk[0].name == bolk1">
-            <div v-if="!pickedBolkOne && !checkBolk1()">
+            <div v-if="!pickedBolkOne && !checkBolk(1)">
               <button
-                @click="clickBolkOne(day.bolk[0], day.id)"
+                @click="clickBolk(day.bolk[0], day.id)"
                 class="__bolk_1"
               >
                 Pick
               </button>
             </div>
             <div v-if="day.bolk[0].picked">
-              {{ day.bolk[0] }}
               <button
                 @click="resetDay(day.bolk[0])"
                 class="__bolk_1__picked__reset"
@@ -34,9 +33,9 @@
             </div>
           </div>
           <div v-if="day.bolk[0].name == bolk2">
-            <div v-if="!pickedBolkTwo && !checkBolk2()">
+            <div v-if="!pickedBolkTwo && !checkBolk(2)">
               <button
-                @click="clickBolkTwo(day.bolk[0], day.id)"
+                @click="clickBolk(day.bolk[0], day.id)"
                 class="__bolk_2"
               >
                 Pick
@@ -53,9 +52,9 @@
             </div>
           </div>
           <div v-if="day.bolk[0].name == bolk3">
-            <div v-if="!pickedBolkThree && !checkBolk3()">
+            <div v-if="!pickedBolkThree && !checkBolk(3)">
               <button
-                @click="clickBolkThree(day.bolk[0], day.id)"
+                @click="clickBolk(day.bolk[0], day.id)"
                 class="__bolk_3"
               >
                 Pick
@@ -111,38 +110,29 @@ export default {
     monthId: Number
   },
   methods: {
-    clickBolkOne(bolk, day) {
-      this.pickedBolkOne = true;
-      this.$emit("clickBolkOne", bolk, this.monthId, day);
-    },
-    clickBolkTwo(bolk, day) {
-      this.pickedBolkTwo = true;
-      this.$emit("clickBolkTwo", bolk, this.monthId, day);
-    },
-    clickBolkThree(bolk, day) {
-      this.pickedBolkThree = true;
-      this.$emit("clickBolkThree", bolk, this.monthId, day);
-    },
-    checkBolk1() {
-      const localDate = this.getBolk1Date;
-      if (localDate !== "") {
-        return true;
+    clickBolk(bolk, day){
+      if (bolk.name == "Bolk 1") {
+        this.pickedBolkOne = true;
+      } else if (bolk.name == "Bolk 2") {
+        this.pickedBolkTwo = true;
+      } else if (bolk.name == "Bolk 3") {
+        this.pickedBolkThree= false;
       }
-      return false;
+      this.$emit("clickBolk", bolk, this.monthId, day)
     },
-    checkBolk2() {
-      const localDate = this.getBolk2Date;
-      if (localDate !== "") {
-        return true;
+    checkBolk(chosenBolk) {
+      const bolk1Date = this.getBolk1Date;
+      const bolk2Date = this.getBolk2Date;
+      const bolk3Date = this.getBolk3Date;
+
+      if(chosenBolk == 1 && bolk1Date !== ""){
+        return true
+      } else if (chosenBolk == 2 && bolk2Date !== ""){
+        return true
+      } else if (chosenBolk == 3 && bolk3Date !== ""){
+        return true
       }
-      return false;
-    },
-    checkBolk3() {
-      const localDate = this.getBolk3Date;
-      if (localDate !== "") {
-        return true;
-      }
-      return false;
+      return false
     },
     resetDay(bolk) {
       bolk.picked = false;
