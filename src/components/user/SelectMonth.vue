@@ -23,7 +23,13 @@
               </button>
             </div>
             <div v-if="day.bolk[0].picked">
-              <button class="__bolk_1__picked__reset">Reset</button>
+              {{ day.bolk[0] }}
+              <button
+                @click="resetDay(day.bolk[0])"
+                class="__bolk_1__picked__reset"
+              >
+                Reset
+              </button>
               <button disabled class="__bolk_1__picked">Picked Bolk 1</button>
             </div>
           </div>
@@ -37,7 +43,12 @@
               </button>
             </div>
             <div v-if="day.bolk[0].picked">
-              <button class="__bolk_2__picked__reset">Reset</button>
+              <button
+                @click="resetDay(day.bolk[0])"
+                class="__bolk_2__picked__reset"
+              >
+                Reset
+              </button>
               <button disabled class="__bolk_2__picked">Picked Bolk 2</button>
             </div>
           </div>
@@ -51,7 +62,12 @@
               </button>
             </div>
             <div v-if="day.bolk[0].picked">
-              <button class="__bolk_3__picked__reset">Reset</button>
+              <button
+                @click="resetDay(day.bolk[0])"
+                class="__bolk_3__picked__reset"
+              >
+                Reset
+              </button>
               <button disabled class="__bolk_3__picked">Picked Bolk 3</button>
             </div>
           </div>
@@ -127,6 +143,17 @@ export default {
         return true;
       }
       return false;
+    },
+    resetDay(bolk) {
+      bolk.picked = false;
+      if (bolk.name == "Bolk 3") {
+        this.pickedBolkThree = false;
+      } else if (bolk.name == "Bolk 2") {
+        this.pickedBolkTwo = false;
+      } else if (bolk.name == "Bolk 1") {
+        this.pickedBolkOne = false;
+      }
+      this.$emit("resetDay", bolk);
     }
   },
   computed: {

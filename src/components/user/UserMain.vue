@@ -9,6 +9,7 @@
           @clickBolkOne="updateBolkOne"
           @clickBolkTwo="updateBolkTwo"
           @clickBolkThree="updateBolkThree"
+          @resetDay="resetDay"
         />
       </div>
     </div>
@@ -51,6 +52,15 @@ export default {
       let bolk3date =
         String(this.getYear) + "-" + String(month) + "-" + String(day);
       this.$store.dispatch("SET_BOLK_3_DATE", bolk3date);
+    },
+    resetDay(bolk) {
+      if (bolk.name == "Bolk 3") {
+        this.$store.dispatch("SET_BOLK_3_DATE", "");
+      } else if (bolk.name == "Bolk 2") {
+        this.$store.dispatch("SET_BOLK_2_DATE", "");
+      } else if (bolk.name == "Bolk 1") {
+        this.$store.dispatch("SET_BOLK_1_DATE", "");
+      }
     }
   },
   computed: {
