@@ -14,11 +14,8 @@
         {{ day.id }}
         <div v-if="!day.value">
           <div v-if="day.bolk[0].name == bolk1">
-            <div v-if="!pickedBolkOne && !checkBolk(1)">
-              <button
-                @click="clickBolk(day.bolk[0], day.id)"
-                class="__bolk_1"
-              >
+            <div v-if="!checkBolk(1)">
+              <button @click="clickBolk(day.bolk[0], day.id)" class="__bolk_1">
                 Pick
               </button>
             </div>
@@ -33,11 +30,8 @@
             </div>
           </div>
           <div v-if="day.bolk[0].name == bolk2">
-            <div v-if="!pickedBolkTwo && !checkBolk(2)">
-              <button
-                @click="clickBolk(day.bolk[0], day.id)"
-                class="__bolk_2"
-              >
+            <div v-if="!checkBolk(2)">
+              <button @click="clickBolk(day.bolk[0], day.id)" class="__bolk_2">
                 Pick
               </button>
             </div>
@@ -52,11 +46,8 @@
             </div>
           </div>
           <div v-if="day.bolk[0].name == bolk3">
-            <div v-if="!pickedBolkThree && !checkBolk(3)">
-              <button
-                @click="clickBolk(day.bolk[0], day.id)"
-                class="__bolk_3"
-              >
+            <div v-if="!checkBolk(3)">
+              <button @click="clickBolk(day.bolk[0], day.id)" class="__bolk_3">
                 Pick
               </button>
             </div>
@@ -98,10 +89,7 @@ export default {
       bolk2: "Bolk 2",
       bolk3: "Bolk 3",
       checkDate: true,
-      chosenDay: [],
-      pickedBolkOne: false,
-      pickedBolkTwo: false,
-      pickedBolkThree: false
+      chosenDay: []
     };
   },
   props: {
@@ -110,39 +98,25 @@ export default {
     monthId: Number
   },
   methods: {
-    clickBolk(bolk, day){
-      if (bolk.name == "Bolk 1") {
-        this.pickedBolkOne = true;
-      } else if (bolk.name == "Bolk 2") {
-        this.pickedBolkTwo = true;
-      } else if (bolk.name == "Bolk 3") {
-        this.pickedBolkThree= false;
-      }
-      this.$emit("clickBolk", bolk, this.monthId, day)
+    clickBolk(bolk, day) {
+      this.$emit("clickBolk", bolk, this.monthId, day);
     },
     checkBolk(chosenBolk) {
       const bolk1Date = this.getBolk1Date;
       const bolk2Date = this.getBolk2Date;
       const bolk3Date = this.getBolk3Date;
 
-      if(chosenBolk == 1 && bolk1Date !== ""){
-        return true
-      } else if (chosenBolk == 2 && bolk2Date !== ""){
-        return true
-      } else if (chosenBolk == 3 && bolk3Date !== ""){
-        return true
+      if (chosenBolk == 1 && bolk1Date !== "") {
+        return true;
+      } else if (chosenBolk == 2 && bolk2Date !== "") {
+        return true;
+      } else if (chosenBolk == 3 && bolk3Date !== "") {
+        return true;
       }
-      return false
+      return false;
     },
     resetDay(bolk) {
       bolk.picked = false;
-      if (bolk.name == "Bolk 3") {
-        this.pickedBolkThree = false;
-      } else if (bolk.name == "Bolk 2") {
-        this.pickedBolkTwo = false;
-      } else if (bolk.name == "Bolk 1") {
-        this.pickedBolkOne = false;
-      }
       this.$emit("resetDay", bolk);
     }
   },
@@ -165,18 +139,20 @@ export default {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 14% 14% 14% 14% 14% 14% 14%;
-  margin-bottom: 3rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 7fr 7fr 7fr 7fr 7fr;
 
   .__disabled {
     button {
       width: 100%;
-      height: 7rem;
+      height: 100%;
     }
   }
 
   .__pickable {
     border: 1px solid black;
+    height: 100%;
+
     button {
       width: 100%;
       height: 7rem;

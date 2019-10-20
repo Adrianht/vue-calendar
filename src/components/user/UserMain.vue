@@ -16,9 +16,6 @@
 
 <script>
 import SelectMonth from "@/components/user/SelectMonth.vue";
-          // @clickBolkOne="updateBolkOne"
-          // @clickBolkTwo="updateBolkTwo"
-          // @clickBolkThree="updateBolkThree"
 
 export default {
   data() {
@@ -30,11 +27,12 @@ export default {
     SelectMonth
   },
   methods: {
-    clickBolk(bolk, month, day){
+    clickBolk(bolk, month, day) {
       let localMonth = month - 1;
       let localDay = day - 1;
       this.months[localMonth].days[localDay].bolk[0].picked = true;
-      let bolkDate = String(this.getYear) + "-" + String(month) + "-" + String(day);
+      let bolkDate =
+        String(this.getYear) + "-" + String(month) + "-" + String(day);
       if (bolk.name == "Bolk 1") {
         this.$store.dispatch("SET_BOLK_1_DATE", bolkDate);
       } else if (bolk.name == "Bolk 2") {
